@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import {button} from "bloomer"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Home } from "./Pages/home"
+import { Home } from "./Pages/home";
+import "bulma/css/bulma.css";
 
 
 function App() {

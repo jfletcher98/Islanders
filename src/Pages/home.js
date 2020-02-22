@@ -1,14 +1,17 @@
 import React from 'react';
-import {button} from "bloomer";
-//import styled from '@emotion/styled';
+import {Button} from "bloomer";
+import styled from '@emotion/styled-base'
 
 export const Home = () => {
-    return (
+    return (    
+    
     <>
     
-    <h1>This is our website</h1>
+    <Button isColor='info'>My button</Button>
+
+    <h1>Welcome __student name__</h1>
 
     </>
-    );
-}
+    )
+};
 
