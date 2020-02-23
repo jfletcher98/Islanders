@@ -1,11 +1,16 @@
-import React from 'react';
-import {Container} from "bloomer";
+import React, {useState} from 'react';
+import {Container, Control, Input} from "bloomer";
 import styled from '@emotion/styled-base'
 import { Panel } from 'bloomer/lib/components/Panel/Panel';
 import { PanelBlock } from 'bloomer/lib/components/Panel/PanelBlock';
 import { PanelHeading } from 'bloomer/lib/components/Panel/PanelHeading';
+import { getAllStudentData, getClassesFromStudent } from '../queries.js';
+import { useQuery} from '@apollo/react-hooks';
+import { render } from '@testing-library/react';
+import { Column } from 'bloomer/lib/grid/Column';
+//import classes from '*.module.css';
 
-const HeaderContainer = styled(Container)`
+const HeaderContainer = styled(Container)` 
     background-color: #CFB87C;
     color: #565A5C;
     
@@ -35,26 +40,68 @@ const BodyContainer = styled(Container)`
     
 `;
 
+const GPAColumn = styled(Column)`
+
+    background-color: #D3D3D3;
+    margin-right: 75%;
+    text-align: center;
+    font-size: 15pt;
+`;
+
 export const Home = () => {
-    return (    
     
+    
+    const [selectedPanel, setSelectedPanel] = useState('all');
+    const [searchText, setSearchText] = useState('');
+
+    const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 1}});
+    
+    if(loading) { return <>Loading...</> }
+    if (error) return <p>Error! ${error.message}</p>
+
+
+
+    const classes = data.students_class_view.filter((classData) => {
+
+        return (
+            (classData.name.toLowerCase().includes(searchText.toLowerCase()))
+        );
+    }).map((class_specific) => {
+        return(
+        <PanelBlock>{class_specific.name}</PanelBlock>
+        )})
+
+    return (    
     <>
     <Container>
-        <HeaderContainer><strong>Welcome, Jacob Carlson</strong></HeaderContainer>
+    {data.students.map(person => (
+    <HeaderContainer key = {person.id}>
+        <strong>Welcome, {person.firstname} </strong>
+        <GPAColumn isOffset = "8">
+        GPA: {person.gpa}
+        </GPAColumn>
+    
+    </HeaderContainer>
+    ))}
         <BodyContainer>
 
             <Panel>
                 <PanelHeading>Classes</PanelHeading>
-                <PanelBlock>MATH 2400</PanelBlock>
-                <PanelBlock>CSCI 3278</PanelBlock>
-                <PanelBlock>GEOG 1011</PanelBlock>
-                <PanelBlock>PHYS 1000</PanelBlock>
-                <PanelBlock>THTR 3011</PanelBlock>
+                <PanelBlock>
+                    <Control hasIcons = "left">
+                        <Input
+                        value = {searchText}
+                        onChange={(event) => setSearchText(event.target.value)} 
+                        isSize="small" 
+                        placeholder="Search"
+                        />
+                    </Control>
+                </PanelBlock>
+                {classes}
             </Panel>
-    
         </BodyContainer>
     </Container>
     </>
     )
-};
+}
 
