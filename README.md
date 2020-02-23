@@ -1,3 +1,5 @@
+![BoldMetrics](https://github.com/jfletcher98/Islanders/blob/master/thumbnail_final.png)
+
 ## Inspiration
 As students who have to use multiple resources to find their grades at CU Boulder, we wanted to work on an idea that would better aid students to quickly know their grades.
 ## What it does
