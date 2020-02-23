@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
-import {Container, Control, Input} from "bloomer";
+import {Container, Control, Input, Button} from "bloomer";
 import styled from '@emotion/styled-base'
 import { Panel } from 'bloomer/lib/components/Panel/Panel';
 import { PanelBlock } from 'bloomer/lib/components/Panel/PanelBlock';
 import { PanelHeading } from 'bloomer/lib/components/Panel/PanelHeading';
-import { getAllStudentData, getClassesFromStudent } from '../queries.js';
+import { getAllStudentData} from '../queries.js';
 import { useQuery} from '@apollo/react-hooks';
 import { render } from '@testing-library/react';
 import { Column } from 'bloomer/lib/grid/Column';
+import { Columns } from 'bloomer/lib/grid/Columns';
 //import classes from '*.module.css';
+import { Link, useHistory} from "react-router-dom";
 
 const HeaderContainer = styled(Container)` 
     background-color: #CFB87C;
@@ -18,14 +20,12 @@ const HeaderContainer = styled(Container)`
     padding-bottom: 20px;
     padding-left: 20px;
     
-    margin-right: 10%;
-    margin-left: 10%;
+    margin-right: 5%;
+    margin-left: 5%;
     margin-bottom: 0%;
 
-    text-align: Left;
-    font-size: 35px;
+    border-radius: 15px 15px 0px 0px;
 `;
-
 
 const BodyContainer = styled(Container)`
     background-color: #D3D3D3;    
@@ -35,23 +35,28 @@ const BodyContainer = styled(Container)`
     padding-left: 20px;
     padding-right: 20px;
 
-    margin-right: 10%;
-    margin-left: 10%;
+    margin-right: 5%;
+    margin-left: 5%;
     
+    border-radius: 0px 0px 15px 15px;
+`;
+
+const HeaderColumn = styled(Column)`    
+    text-align: Left;
+    font-size: 25px;
 `;
 
 const GPAColumn = styled(Column)`
-
     background-color: #D3D3D3;
-    margin-right: 75%;
-    text-align: center;
-    font-size: 15pt;
+    text-align: Left;
+    margin-right: 3%;
+    font-size: 25px;
+    border-radius: 5px 5px 5px 5px;
 `;
 
 export const Home = () => {
     
-    
-    const [selectedPanel, setSelectedPanel] = useState('all');
+    const history = useHistory();
     const [searchText, setSearchText] = useState('');
 
     const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 1}});
@@ -59,7 +64,17 @@ export const Home = () => {
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>
 
-
+    /* 
+        href="#"
+            onClick={(event) => {
+                event.preventDefault();
+                history.push({
+                    pathname: "/classinfo",
+                    data: class_specific.id
+                })
+            }}
+        
+    */
 
     const classes = data.students_class_view.filter((classData) => {
 
@@ -67,8 +82,11 @@ export const Home = () => {
             (classData.name.toLowerCase().includes(searchText.toLowerCase()))
         );
     }).map((class_specific) => {
+        console.log(data.students[0].id);
         return(
-        <PanelBlock>{class_specific.name}</PanelBlock>
+        <Link key={class_specific.id} to={'/'+class_specific.id+'/'+data.students[0].id}>
+            <PanelBlock>{class_specific.name}</PanelBlock>
+        </Link>
         )})
 
     return (    
@@ -76,11 +94,11 @@ export const Home = () => {
     <Container>
     {data.students.map(person => (
     <HeaderContainer key = {person.id}>
-        <strong>Welcome, {person.firstname} </strong>
-        <GPAColumn isOffset = "8">
-        GPA: {person.gpa}
-        </GPAColumn>
-    
+        <Columns>
+            <HeaderColumn isSize='3/5'><strong>Welcome, {person.firstname} {person.lastname} </strong></HeaderColumn>
+            <GPAColumn>GPA: {person.gpa} <button style={{float: 'right'}}>View your class rank</button>
+               </GPAColumn>
+        </Columns>
     </HeaderContainer>
     ))}
         <BodyContainer>
