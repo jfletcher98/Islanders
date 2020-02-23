@@ -6,12 +6,9 @@ import { PanelBlock } from 'bloomer/lib/components/Panel/PanelBlock';
 import { PanelHeading } from 'bloomer/lib/components/Panel/PanelHeading';
 import { getAllStudentData} from '../queries.js';
 import { useQuery} from '@apollo/react-hooks';
-import { render } from '@testing-library/react';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
-//import classes from '*.module.css';
-import { Link, useHistory} from "react-router-dom";
-import maincss from "../main.css"
+import { Link} from "react-router-dom";
 
 const HeaderContainer = styled(Container)` 
     background-color: #CFB87C;
@@ -57,25 +54,12 @@ const GPAColumn = styled(Column)`
 
 export const Home = () => {
     
-    const history = useHistory();
     const [searchText, setSearchText] = useState('');
 
-    const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 1}});
+    const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 7}});
     
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>
-
-    /* 
-        href="#"
-            onClick={(event) => {
-                event.preventDefault();
-                history.push({
-                    pathname: "/classinfo",
-                    data: class_specific.id
-                })
-            }}
-        
-    */
 
     const classes = data.students_class_view.filter((classData) => {
 
@@ -93,14 +77,14 @@ export const Home = () => {
 
     return (    
     <>
-    <body class="background" >
+    <body className={"background"}>
         {data.students.map(person => (
         <HeaderContainer key = {person.id}>
             <Columns>
                 <HeaderColumn isSize='3/5'><strong>Welcome, {person.firstname} {person.lastname} </strong></HeaderColumn>
                 <GPAColumn>GPA: {person.gpa}
                     <Link to={"/gparank"}> 
-                    <button style={{float: 'right'}}>View your class rank</button>
+                    <Button style={{float: 'right'}}>View your class rank</Button>
                     </Link>
                 </GPAColumn>
             </Columns>

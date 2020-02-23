@@ -1,15 +1,13 @@
-import React, {useState} from 'react';
-import {Container, Control, Input, Button} from "bloomer";
+import React from 'react';
+import {Container, Button} from "bloomer";
 import styled from '@emotion/styled-base'
 import { Panel } from 'bloomer/lib/components/Panel/Panel';
 import { PanelBlock } from 'bloomer/lib/components/Panel/PanelBlock';
 import { PanelHeading } from 'bloomer/lib/components/Panel/PanelHeading';
-import { getAllStudentData, getClassesFromStudent, getClass, getClassTests } from '../queries.js';
+import {  getClassTests } from '../queries.js';
 import { useQuery} from '@apollo/react-hooks';
-import { render } from '@testing-library/react';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
-//import classes from '*.module.css';
 import { Link } from "react-router-dom";
 
 
@@ -47,11 +45,6 @@ const HeaderColumn = styled(Column)`
     font-size: 25px;
 `;
 
-const BackButton = styled(Button)`
-    position: absoulte;
-    right: 0px;
-`;
-
 export const ClassInfo = (props) => {
 
     const classVar = props.match.params.classId;
@@ -77,7 +70,7 @@ export const ClassInfo = (props) => {
         <Columns>
             <HeaderColumn isSize='3/5'><strong>{data.class[0].name}: </strong>
             <Link to="/">
-            <BackButton>Back</BackButton>
+            <Button style={{float: 'right'}}>Back</Button>
             </Link>
             </HeaderColumn>
         </Columns>

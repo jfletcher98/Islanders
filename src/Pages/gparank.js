@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
-import {Container, Control, Input, Button} from "bloomer";
+import React from 'react';
+import {Container, Button} from "bloomer";
 import styled from '@emotion/styled-base'
 import { Panel } from 'bloomer/lib/components/Panel/Panel';
-import { PanelBlock } from 'bloomer/lib/components/Panel/PanelBlock';
-import { PanelHeading } from 'bloomer/lib/components/Panel/PanelHeading';
-import { getAllStudentData, getClassesFromStudent } from '../queries.js';
 import { useQuery} from '@apollo/react-hooks';
-import { render } from '@testing-library/react';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
 import { getGPAHistogramData } from '../queries.js';
@@ -48,39 +44,17 @@ const HeaderColumn = styled(Column)`
     font-size: 25px;
 `;
 
-const GPAColumn = styled(Column)`
-    background-color: #D3D3D3;
-    text-align: Left;
-    margin-right: 3%;
-    font-size: 25px;
-    border-radius: 5px 5px 5px 5px;
-`;
 export const GPARank = () => {
 
     const {loading, error, data} = useQuery(getGPAHistogramData);
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>
-
-    //console.log(data)
     
     const myArr = [
         ['Student', 'GPA']
     ];
 
-    //myArr.push([['john'],[4.0]])
-
-    console.log(myArr);
-
-    //const arrItems = myArr.map((element)=>    
-    //        console.log(element)
-    //);
-
-    
-        //console.log(testArry[i]);
-    //}
-
-    const rows = data.students.map((eachPiece)=>{
-        //console.log(eachPiece.firstname)
+    data.students.map((eachPiece)=>{
         myArr.push([eachPiece.firstname,eachPiece.gpa])
     })
 
