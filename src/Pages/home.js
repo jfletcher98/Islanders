@@ -8,7 +8,8 @@ import { getAllStudentData} from '../queries.js';
 import { useQuery} from '@apollo/react-hooks';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import MainCSS from "../Pages/main.css"
 
 const HeaderContainer = styled(Container)` 
     background-color: #CFB87C;
@@ -56,7 +57,7 @@ export const Home = () => {
     
     const [searchText, setSearchText] = useState('');
 
-    const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 7}});
+    const {loading, error, data} = useQuery(getAllStudentData, {variables: {id: 3}});
     
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>

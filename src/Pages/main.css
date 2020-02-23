@@ -1,5 +1,5 @@
 .background {
     height: 800px;
-    background-image: url("./Pages/background1.jpg");
+    background-image: url("background1.jpg");
     background-size: cover;
 }

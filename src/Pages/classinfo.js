@@ -9,6 +9,8 @@ import { useQuery} from '@apollo/react-hooks';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
 import { Link } from "react-router-dom";
+import { Collapsible } from 'react-collapsible';
+import { Chart } from 'react-google-charts';
 
 
 const HeaderContainer = styled(Container)` 
@@ -56,12 +58,15 @@ export const ClassInfo = (props) => {
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>
 
-    console.log(data.students[0].tests)
-
+    //console.log(data.students[0].tests)
+    //console.log(data.students[0].tests.grade)
+    
     const tests = data.students[0].tests;
     const test_specific = tests.map((test) => 
-    <PanelBlock>{test.name} {test.grade}</PanelBlock>
+    <PanelBlock>{test.name}-{test.grade}</PanelBlock>
     );
+
+
     return (    
     <>
     <Container>
@@ -78,7 +83,7 @@ export const ClassInfo = (props) => {
     <BodyContainer>
         <Panel>
             <PanelHeading>Your tests</PanelHeading>
-           {test_specific}
+                {test_specific}
         </Panel>
     </BodyContainer>
     </Container>

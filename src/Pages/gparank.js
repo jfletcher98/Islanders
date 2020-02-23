@@ -27,7 +27,6 @@ const HeaderContainer = styled(Container)`
 
 const BodyContainer = styled(Container)`
     background-color: #D3D3D3;    
-
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
@@ -73,18 +72,18 @@ export const GPARank = () => {
     </HeaderContainer>
     <BodyContainer>
         <Panel>
-        <Chart
-                width={'500px'}
-                height={'300px'}
-                chartType="BarChart"
-                loader={<div>Loading...</div>}
-                data={myArr}
-                options={{
-                    title: 'GPA Graph of all Students',
-                    legend: {position: 'none'},
-                }}
-                rootProps={{'data-testid':'4'}}
-            />
+            <Chart 
+                    width={'500px'}
+                    height={'300px'}
+                    chartType="BarChart"
+                    loader={<div>Loading...</div>}
+                    data={myArr}
+                    options={{
+                        title: 'GPA Graph of all Students',
+                        legend: {position: 'none'},
+                    }}
+                    rootProps={{'data-testid':'4'}}
+                />
         </Panel> 
     </BodyContainer>
     </Container>
