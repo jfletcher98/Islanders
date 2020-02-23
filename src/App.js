@@ -1,11 +1,11 @@
 import React from 'react';
-//import logo from './logo.svg';
 import './App.css';
-//import {button} from "bloomer"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Home } from "./Pages/home";
+import { ClassInfo} from "./Pages/classinfo";
+import { GPARank } from "./Pages/gparank";
 import "bulma/css/bulma.css";
-import {ApolloClient, gql, HttpLink, InMemoryCache} from 'apollo-boost';
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import { ApolloProvider } from "react-apollo";
 
 const cache = new InMemoryCache();
@@ -24,7 +24,11 @@ function App() {
     <ApolloProvider client = {client}>
     <Router>
       <Switch>
-        <Route path="/">
+        <Route path="/:classId/:studentId" component={ClassInfo} />
+        <Route path="/gparank">
+          <GPARank />
+        </Route>
+        <Route path ="/">
           <Home />
         </Route>
       </Switch>
