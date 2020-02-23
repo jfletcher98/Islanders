@@ -47,16 +47,12 @@ const HeaderColumn = styled(Column)`
     font-size: 25px;
 `;
 
-const GPAColumn = styled(Column)`
-    background-color: #D3D3D3;
-    text-align: Left;
-    margin-right: 3%;
-    font-size: 25px;
-    border-radius: 5px 5px 5px 5px;
+const BackButton = styled(Button)`
+    position: absoulte;
+    right: 0px;
 `;
-export const ClassInfo = (props) => {
 
-    const [searchText, setSearchText] = useState('');
+export const ClassInfo = (props) => {
 
     const classVar = props.match.params.classId;
     const studentVar = props.match.params.studentId;
@@ -81,7 +77,7 @@ export const ClassInfo = (props) => {
         <Columns>
             <HeaderColumn isSize='3/5'><strong>{data.class[0].name}: </strong>
             <Link to="/">
-            <button class="button is-light" style={{float: 'right'}}>Back</button>
+            <BackButton>Back</BackButton>
             </Link>
             </HeaderColumn>
         </Columns>

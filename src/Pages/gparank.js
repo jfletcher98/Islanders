@@ -10,9 +10,8 @@ import { render } from '@testing-library/react';
 import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
 import { getGPAHistogramData } from '../queries.js';
-import { Route } from 'react-router-dom';
-import { Home } from './home.js';
 import { Link } from 'react-router-dom'
+import { Chart } from 'react-google-charts';
 //import classes from '*.module.css';
 
 const HeaderContainer = styled(Container)` 
@@ -59,24 +58,36 @@ const GPAColumn = styled(Column)`
 export const GPARank = () => {
 
     const {loading, error, data} = useQuery(getGPAHistogramData);
-    
-
-
     if(loading) { return <>Loading...</> }
     if (error) return <p>Error! ${error.message}</p>
 
-    console.log(data);
+    //console.log(data)
+    
+    const myArr = [
+        ['Student', 'GPA']
+    ];
+
+    //myArr.push([['john'],[4.0]])
+
+    console.log(myArr);
+
+    //const arrItems = myArr.map((element)=>    
+    //        console.log(element)
+    //);
+
+    
+        //console.log(testArry[i]);
+    //}
 
     const rows = data.students.map((eachPiece)=>{
-        return(
-        <PanelBlock>{eachPiece.firstname},{eachPiece.gpa}</PanelBlock>
-        )})
+        //console.log(eachPiece.firstname)
+        myArr.push([eachPiece.firstname,eachPiece.gpa])
+    })
 
 
     return (    
     <>
     <Container>
-    
     <HeaderContainer>
         <Columns>
             <HeaderColumn isSize='3/5'><strong>GPA Rank: </strong>
@@ -88,7 +99,18 @@ export const GPARank = () => {
     </HeaderContainer>
     <BodyContainer>
         <Panel>
-        {rows}
+        <Chart
+                width={'500px'}
+                height={'300px'}
+                chartType="BarChart"
+                loader={<div>Loading...</div>}
+                data={myArr}
+                options={{
+                    title: 'GPA Graph of all Students',
+                    legend: {position: 'none'},
+                }}
+                rootProps={{'data-testid':'4'}}
+            />
         </Panel> 
     </BodyContainer>
     </Container>

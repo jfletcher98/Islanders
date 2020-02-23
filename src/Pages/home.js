@@ -11,6 +11,7 @@ import { Column } from 'bloomer/lib/grid/Column';
 import { Columns } from 'bloomer/lib/grid/Columns';
 //import classes from '*.module.css';
 import { Link, useHistory} from "react-router-dom";
+import maincss from "../main.css"
 
 const HeaderContainer = styled(Container)` 
     background-color: #CFB87C;
@@ -89,36 +90,39 @@ export const Home = () => {
         </Link>
         )})
 
+
     return (    
     <>
-    <Container>
-    {data.students.map(person => (
-    <HeaderContainer key = {person.id}>
-        <Columns>
-            <HeaderColumn isSize='3/5'><strong>Welcome, {person.firstname} {person.lastname} </strong></HeaderColumn>
-            <GPAColumn>GPA: {person.gpa} <button style={{float: 'right'}}>View your class rank</button>
-               </GPAColumn>
-        </Columns>
-    </HeaderContainer>
-    ))}
-        <BodyContainer>
-
-            <Panel>
-                <PanelHeading>Classes</PanelHeading>
-                <PanelBlock>
-                    <Control hasIcons = "left">
-                        <Input
-                        value = {searchText}
-                        onChange={(event) => setSearchText(event.target.value)} 
-                        isSize="small" 
-                        placeholder="Search"
-                        />
-                    </Control>
-                </PanelBlock>
-                {classes}
-            </Panel>
-        </BodyContainer>
-    </Container>
+    <body class="background" >
+        {data.students.map(person => (
+        <HeaderContainer key = {person.id}>
+            <Columns>
+                <HeaderColumn isSize='3/5'><strong>Welcome, {person.firstname} {person.lastname} </strong></HeaderColumn>
+                <GPAColumn>GPA: {person.gpa}
+                    <Link to={"/gparank"}> 
+                    <button style={{float: 'right'}}>View your class rank</button>
+                    </Link>
+                </GPAColumn>
+            </Columns>
+        </HeaderContainer>
+        ))}
+            <BodyContainer>
+                <Panel>
+                    <PanelHeading>Classes</PanelHeading>
+                    <PanelBlock>
+                        <Control hasIcons = "left">
+                            <Input
+                            value = {searchText}
+                            onChange={(event) => setSearchText(event.target.value)} 
+                            isSize="small" 
+                            placeholder="Search"
+                            />
+                        </Control>
+                    </PanelBlock>
+                    {classes}
+                </Panel>
+            </BodyContainer>
+    </body>
     </>
     )
 }
